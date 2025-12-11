@@ -263,6 +263,12 @@ html, body {
   padding: 0 8px;
 }
 
+/* Spacer to balance nav-bar when Back button is hidden */
+.nav-spacer {
+  width: 120px;
+  flex-shrink: 0;
+}
+
 /* Swiper Container */
 .swiper-container {
   flex: 1;

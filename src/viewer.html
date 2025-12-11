@@ -156,6 +156,8 @@
           <span class="icon-back"></span>
           Back
         </button>
+        <!-- Spacer to keep title centered when Back is hidden -->
+        <div id="backSpacer" class="nav-spacer" style="display: none;"></div>
       </nav>
       
       <div class="swiper-container">
@@ -288,11 +290,14 @@
       
       // Show/hide Back button based on catalog type
       const backButton = document.getElementById('backButton');
+      const backSpacer = document.getElementById('backSpacer');
       if (currentCatalogData.hasDetailedTOC === false) {
-        // No TOC - hide Back button (no useful action)
+        // No TOC - hide Back button, show spacer to keep title centered
         backButton.style.display = 'none';
+        backSpacer.style.display = 'block';
       } else {
         backButton.style.display = 'flex';
+        backSpacer.style.display = 'none';
       }
       
       // Initialize or update swiper
