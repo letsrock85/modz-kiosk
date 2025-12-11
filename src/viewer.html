@@ -152,7 +152,7 @@
           Home
         </button>
         <span class="nav-title" id="viewerTitle">MODZ® Catalog</span>
-        <button class="nav-button secondary" onclick="goToTOC()">
+        <button class="nav-button secondary" id="backButton" onclick="goToTOC()">
           <span class="icon-back"></span>
           Back
         </button>
@@ -285,6 +285,15 @@
     function showViewer(startPage = 1) {
       document.getElementById('tocScreen').classList.add('hidden');
       document.getElementById('viewerScreen').classList.remove('hidden');
+      
+      // Show/hide Back button based on catalog type
+      const backButton = document.getElementById('backButton');
+      if (currentCatalogData.hasDetailedTOC === false) {
+        // No TOC - hide Back button (no useful action)
+        backButton.style.display = 'none';
+      } else {
+        backButton.style.display = 'flex';
+      }
       
       // Initialize or update swiper
       initSwiper(startPage);

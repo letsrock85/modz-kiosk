@@ -196,6 +196,8 @@ html, body {
   background-color: var(--modz-dark-gray);
   border-bottom: 1px solid #333;
   z-index: 100;
+  gap: 12px;
+  min-height: 80px;
 }
 
 .nav-button {
@@ -211,6 +213,7 @@ html, body {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 /* Home button - PRIMARY (red, stands out) */
@@ -251,6 +254,13 @@ html, body {
   font-size: 20px;
   font-weight: 600;
   color: var(--text-primary);
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 8px;
 }
 
 /* Swiper Container */
@@ -308,6 +318,8 @@ html, body {
   padding: var(--padding-md);
   background-color: var(--modz-dark-gray);
   border-bottom: 1px solid #333;
+  gap: 12px;
+  min-height: 80px;
 }
 
 .toc-header h1 {
@@ -316,6 +328,11 @@ html, body {
   font-size: 28px;
   font-weight: 700;
   color: var(--text-primary);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 8px;
 }
 
 .toc-content {
