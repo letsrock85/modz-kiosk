@@ -1,0 +1,17 @@
+# Development
+.cursor/
+*.py
+__pycache__/
+
+# Source files (keep only what's needed for deploy)
+assets/*.pdf
+assets/*.psd
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+

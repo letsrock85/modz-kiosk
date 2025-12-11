@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  modz-kiosk:
+    build: .
+    container_name: modz-kiosk
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.modz-kiosk.rule=Host(`kiosk.sergeivas.com`)"
+      - "traefik.http.routers.modz-kiosk.entrypoints=https"
+      - "traefik.http.routers.modz-kiosk.tls.certresolver=letsencrypt"
+      - "traefik.http.services.modz-kiosk.loadbalancer.server.port=80"
+

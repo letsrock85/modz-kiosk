@@ -1,0 +1,22 @@
+# Git
+.git
+.gitignore
+
+# Development
+.cursor
+*.md
+*.py
+*.psd
+
+# Source assets (not needed in container)
+assets/*.pdf
+assets/*.psd
+assets/*.png
+
+# Node modules (if any)
+node_modules
+
+# IDE
+.vscode
+.idea
+
