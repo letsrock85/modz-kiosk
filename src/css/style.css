@@ -263,9 +263,16 @@ html, body {
   padding: 0 8px;
 }
 
-/* Spacer to balance nav-bar when Back button is hidden */
+/* Spacers to balance headers and keep titles centered */
 .nav-spacer {
-  width: 120px;
+  /* Matches Back button width */
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.nav-spacer-home {
+  /* Matches Home button width */
+  width: 130px;
   flex-shrink: 0;
 }
 
