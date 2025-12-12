@@ -8,13 +8,13 @@
   <title>MODZ Kiosk</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    /* Demo wrapper - fixed aspect ratio 1080x1920 centered on black background */
+    /* Demo wrapper - fixed aspect ratio 1080x1920 centered */
     html, body {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100%;
-      background-color: #000;
+      background-color: #e8e4df; /* Match app background for seamless look */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -24,109 +24,131 @@
     .kiosk-frame {
       width: 100%;
       height: 100%;
-      max-width: calc(100vh * (1080 / 1920)); /* Maintain aspect ratio based on height */
-      max-height: calc(100vw * (1920 / 1080)); /* Maintain aspect ratio based on width */
-      aspect-ratio: 1080 / 1920;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
     }
     
-    /* On actual kiosk (portrait), fill the screen */
-    @media screen and (max-aspect-ratio: 1080/1920) {
-      .kiosk-frame {
-        width: 100%;
-        height: auto;
-        max-width: none;
-        max-height: 100%;
+    /* Desktop/landscape: maintain aspect ratio with black letterbox */
+    @media screen and (min-aspect-ratio: 9/16) {
+      html, body {
+        background-color: #000;
       }
-    }
-    
-    @media screen and (min-aspect-ratio: 1080/1920) {
       .kiosk-frame {
+        max-width: calc(100vh * (1080 / 1920));
         height: 100%;
         width: auto;
-        max-height: none;
-        max-width: 100%;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
       }
     }
+    
+    /* Portrait/mobile: fill entire screen */
+    @media screen and (max-aspect-ratio: 9/16) {
+      .kiosk-frame {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+      }
+    }
+    
     /* Override home screen background with actual image */
     .home-screen {
       background-image: url('assets/images/modz_kiosk_background.png');
-      background-color: #0A0A0A;
+      background-color: #e8e4df;
       background-size: cover;
-      background-position: center bottom;
+      background-position: center;
       background-repeat: no-repeat;
     }
     
-    /* Header with logo image - at TOP, smaller, pushed down 10% */
+    /* Header with logo image - LEFT aligned */
     .home-header {
       margin-bottom: 0;
-      margin-top: 10%; /* Push down 10% */
+      margin-top: 5%;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: flex-start;
       width: 100%;
+      padding-left: 8%;
     }
     
     .home-header img {
-      width: 260px;
-      max-width: 70%;
+      width: 420px;
+      max-width: 85%;
       height: auto;
       display: block;
     }
     
-    /* Brand buttons grid - BIGGER buttons (+20%) */
+    /* PGA 2026 text */
+    .pga-subtitle {
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 9.8px;
+      color: #a11114;
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+    
+    /* Decorative divider: horizontal line with triangle marker on right side */
+    .decorative-divider {
+      width: 90%;
+      margin-top: 25px;
+      margin-bottom: 25px;
+      position: relative;
+      height: 50px;
+    }
+    
+    /* Horizontal line - dark gray, 1px thick */
+    .decorative-divider .h-line {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: #b5b0aa;
+    }
+    
+    /* Marker (triangle + vertical line) positioned on right */
+    .decorative-divider .marker {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      right: 15%;
+      top: 0;
+    }
+    
+    .decorative-divider .triangle {
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 9px solid #a11114;
+      margin-bottom: 4px;
+    }
+    
+    /* Vertical line - thin, doesn't touch triangle or button */
+    .decorative-divider .v-line {
+      width: 1px;
+      height: 32px;
+      background-color: #a11114;
+    }
+    
+    /* Brand buttons */
     .brand-grid {
-      gap: 20px;
-      max-width: 700px; /* Much bigger */
-      width: 95%;
+      gap: 28px;
+      max-width: 700px;
+      width: 90%;
       padding: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
       margin-bottom: auto;
     }
     
-    /* Brand button logos */
     .brand-button {
-      padding: 20px;
-      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-    
-    /* Press effect - scale down smoothly */
-    .brand-button:active {
-      transform: scale(0.95);
-      border-color: var(--border-active) !important;
-    }
-    
-    .brand-button img.brand-logo {
-      max-width: 70%;
-      max-height: 70%;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      transition: transform 0.15s ease;
-    }
-    
-    /* Specific adjustments per button - logos 20% bigger */
-    .brand-button.modz img.brand-logo {
-      max-width: 78%;
-      max-height: 90%;
-    }
-    
-    .brand-button.modz-battery img.brand-logo {
-      max-width: 90%;
-      max-height: 55%;
-    }
-    
-    .brand-button.ekt img.brand-logo {
-      max-width: 66%;
-      max-height: 48%;
-    }
-    
-    .brand-button.motorcode img.brand-logo {
-      max-width: 66%;
-      max-height: 66%;
+      padding: 26px 30px;
+      min-height: 80px;
     }
   </style>
 </head>
@@ -135,32 +157,42 @@
   <div class="kiosk-frame">
     <!-- HOME SCREEN -->
     <div class="home-screen" id="homeScreen">
-    <header class="home-header">
-      <img src="assets/images/modz_kiosk_explore_modz_top_logo.png" alt="Explore MODZ">
-    </header>
-    
-    <div class="brand-grid">
-      <!-- MODZ Button - Red background -->
-      <a href="viewer.html?catalog=modz" class="brand-button modz">
-        <img src="assets/images/modz_kiosk_modz_logo.png" alt="MODZ" class="brand-logo">
-      </a>
+      <header class="home-header">
+        <img src="assets/images/modz_kiosk_explore_modz_top_logo.png" alt="Explore MODZ">
+        <span class="pga-subtitle">P G A  2 0 2 6</span>
+      </header>
       
-      <!-- MODZ Battery Button - White background -->
-      <a href="viewer.html?catalog=modz-battery" class="brand-button modz-battery">
-        <img src="assets/images/modz_kiosk_modz_battery_logo.png" alt="MODZ Battery" class="brand-logo">
-      </a>
+      <!-- Decorative element: horizontal line with triangle marker on right -->
+      <div class="decorative-divider">
+        <div class="h-line"></div>
+        <div class="marker">
+          <div class="triangle"></div>
+          <div class="v-line"></div>
+        </div>
+      </div>
       
-      <!-- EKT Button - Black background -->
-      <a href="viewer.html?catalog=ekt" class="brand-button ekt">
-        <img src="assets/images/modz_kiosk_ekt_logo.png" alt="EKT" class="brand-logo">
-      </a>
-      
-      <!-- Motorcode Button - Black background -->
-      <a href="viewer.html?catalog=motorcode" class="brand-button motorcode">
-        <img src="assets/images/modz_kiosk_motorcode_logo.png" alt="Motorcode" class="brand-logo">
-      </a>
+      <div class="brand-grid">
+        <!-- Product Catalog Button -->
+        <a href="viewer.html?catalog=modz" class="brand-button">
+          <span class="brand-text"><strong>Product</strong> <span class="light">Catalog</span></span>
+        </a>
+        
+        <!-- MODZ Battery Button -->
+        <a href="viewer.html?catalog=modz-battery" class="brand-button">
+          <span class="brand-text"><strong>MODZ</strong> <span class="light">Battery</span></span>
+        </a>
+        
+        <!-- MOTORCODE Button -->
+        <a href="viewer.html?catalog=motorcode" class="brand-button">
+          <span class="brand-text"><strong>MOTORCODE</strong> <span class="light">For Your Dealership</span></span>
+        </a>
+        
+        <!-- EKT Button -->
+        <a href="viewer.html?catalog=ekt" class="brand-button">
+          <span class="brand-text"><strong>EKT</strong> <span class="light">Partnership</span></span>
+        </a>
+      </div>
     </div>
-  </div>
   </div> <!-- /kiosk-frame -->
 
   <script src="js/inactivity.js"></script>

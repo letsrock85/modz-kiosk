@@ -1,23 +1,24 @@
 /* MODZ Kiosk - Main Styles */
 /* Target: 1080x1920 (portrait) */
+/* Updated: December 2024 - Light theme redesign */
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Bebas+Neue&display=swap');
 
 :root {
-  /* Brand Colors */
+  /* Brand Colors - Updated for light theme */
   --modz-red: #a11114;
-  --modz-black: #0A0A0A;
+  --modz-red-dark: #8a0e11;
+  --modz-black: #3a3a3a;
   --modz-white: #FFFFFF;
-  --modz-gray: #1A1A1A;
-  --modz-dark-gray: #121212;
+  --modz-light-bg: #e8e4df;  /* Light beige/gray background */
+  --modz-light-gray: #d5d0ca;  /* Button background */
   
   /* UI Colors */
-  --border-default: #FFFFFF;
-  --border-active: #C41E3A;
-  --button-bg-dark: #0D0D0D;
-  --button-bg-light: #FFFFFF;
-  --text-primary: #FFFFFF;
-  --text-secondary: #AAAAAA;
+  --border-light: #c5c0ba;
+  --border-active: #a11114;
+  --text-dark: #3a3a3a;
+  --text-light: #888888;
+  --text-red: #a11114;
   
   /* Spacing */
   --padding-lg: 40px;
@@ -26,8 +27,9 @@
   --gap: 20px;
   
   /* Border Radius */
-  --radius-lg: 28px;
-  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
 }
 
 * {
@@ -45,8 +47,8 @@ html, body {
   height: 100%;
   overflow: hidden;
   font-family: 'Oswald', 'Segoe UI', 'Arial', sans-serif;
-  background-color: var(--modz-black);
-  color: var(--text-primary);
+  background-color: var(--modz-light-bg);
+  color: var(--text-dark);
 }
 
 /* ==================== HOME SCREEN ==================== */
@@ -58,123 +60,149 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  background-color: var(--modz-black);
+  background-color: var(--modz-light-bg);
   background-size: cover;
-  background-position: center bottom;
+  background-position: center;
   background-repeat: no-repeat;
   padding: 0 var(--padding-lg);
-  padding-top: 6%;
+  padding-top: 8%;
   position: relative;
 }
 
+/* Header section with logo */
 .home-header {
-  text-align: center;
+  text-align: left;
   position: relative;
   z-index: 1;
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
   flex-shrink: 0;
+  padding-left: 5%;
 }
 
 .home-header img {
-  max-width: 100%;
+  max-width: 85%;
   height: auto;
   display: block;
 }
 
-/* Brand Buttons Grid */
+/* PGA 2026 subtitle */
+.pga-subtitle {
+  font-family: 'Oswald', sans-serif;
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 12px;
+  color: var(--text-red);
+  margin-top: 8px;
+  text-transform: uppercase;
+}
+
+/* Red decorative line */
+.decorative-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.decorative-line .triangle {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 12px solid var(--modz-red);
+}
+
+.decorative-line .line {
+  width: 2px;
+  height: 40px;
+  background-color: var(--modz-red);
+}
+
+/* Brand Buttons - Vertical list */
 .brand-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  width: 95%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 90%;
   max-width: 700px;
   position: relative;
   z-index: 1;
   flex-grow: 0;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .brand-button {
-  aspect-ratio: 1;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-lg);
-  border: 3px solid var(--border-default);
+  padding: 22px 30px;
+  background-color: #d9d9d9;
+  border-radius: 18px;
+  border: 2px solid transparent;
+  /* Subtle shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+  transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
               border-color 0.15s ease, 
-              box-shadow 0.2s ease;
+              box-shadow 0.15s ease,
+              background-color 0.15s ease;
   text-decoration: none;
   position: relative;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
+  min-height: 70px;
+}
+
+/* Inner border using pseudo-element */
+.brand-button::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  border: 1px solid #b8b8b8;
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+/* Text inside brand buttons */
+.brand-button .brand-text {
+  font-family: 'Oswald', sans-serif;
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  color: var(--text-dark);
+  text-transform: uppercase;
+}
+
+.brand-button .brand-text strong {
+  font-weight: 600;
+}
+
+/* Light text for secondary words */
+.brand-button .brand-text .light {
+  font-weight: 300;
+  color: var(--text-light);
 }
 
 /* Press/Active state - smooth scale down */
 .brand-button:active {
-  transform: scale(0.92);
-  border-color: var(--border-active) !important;
-  box-shadow: 0 0 25px rgba(196, 30, 58, 0.5);
-  transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-              border-color 0.1s ease, 
-              box-shadow 0.1s ease;
+  transform: scale(0.97);
+  border-color: var(--border-active);
+  background-color: #cfcfcf;
 }
 
-/* Hover state (desktop) - red border */
+/* Hover state (desktop) */
 @media (hover: hover) {
   .brand-button:hover {
     border-color: var(--border-active);
   }
-}
-
-/* MODZ Button - Red background (#a11114), white border by default */
-.brand-button.modz {
-  background-color: #a11114;
-  border-color: var(--border-default);
-}
-
-/* MODZ Battery Button - White background, white border */
-.brand-button.modz-battery {
-  background-color: var(--modz-white);
-  border-color: var(--border-default);
-  color: var(--modz-black);
-}
-
-/* EKT Button - Black with white border */
-.brand-button.ekt {
-  background-color: var(--modz-black);
-  border-color: var(--border-default);
-}
-
-/* Motorcode Button - Black with white border */
-.brand-button.motorcode {
-  background-color: var(--modz-black);
-  border-color: var(--border-default);
-}
-
-.brand-button img {
-  max-width: 65%;
-  max-height: 50%;
-  object-fit: contain;
-}
-
-.brand-button .brand-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.brand-button .brand-name {
-  font-family: 'Oswald', sans-serif;
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
 }
 
 /* ==================== VIEWER SCREEN ==================== */
@@ -184,76 +212,72 @@ html, body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: var(--modz-black);
+  background-color: var(--modz-light-bg);
 }
 
-/* Navigation Bar */
+/* Navigation Bar - Light gray style */
 .nav-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: var(--padding-sm) var(--padding-md);
-  background-color: var(--modz-dark-gray);
-  border-bottom: 1px solid #333;
+  background-color: #d9d9d9;
+  border-bottom: 1px solid #c5c0ba;
   z-index: 100;
   gap: 12px;
-  min-height: 80px;
+  min-height: 70px;
 }
 
 .nav-button {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background-color: var(--modz-gray);
-  color: var(--text-primary);
-  border: 2px solid #444;
-  border-radius: var(--radius-md);
-  font-size: 18px;
-  font-weight: 600;
+  gap: 6px;
+  padding: 10px 16px;
+  background-color: #d9d9d9;
+  color: var(--text-dark);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   flex-shrink: 0;
+  /* Shadow for depth */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
-/* Home button - PRIMARY (red, stands out) */
-.nav-button.primary {
-  background-color: var(--modz-red);
-  border-color: var(--modz-red);
+/* Nav button arrow icons */
+.nav-button .arrow-icon {
+  color: var(--modz-red);
+  font-size: 14px;
 }
 
-.nav-button.primary:active {
-  background-color: #8a0e11;
-  transform: scale(0.95);
-}
-
-/* Back button - SECONDARY (subtle, gray) */
-.nav-button.secondary {
-  background-color: transparent;
-  border-color: #555;
-  color: #aaa;
-}
-
-.nav-button.secondary:active {
-  background-color: #333;
-  border-color: #777;
-  transform: scale(0.95);
-}
-
+/* Press state for nav buttons */
 .nav-button:active {
-  background-color: var(--modz-red);
+  transform: scale(0.95);
+  background-color: #cfcfcf;
+  border-color: var(--border-active);
 }
 
-.nav-button svg {
-  width: 24px;
-  height: 24px;
-  fill: currentColor;
+/* Hover state (desktop) */
+@media (hover: hover) {
+  .nav-button:hover {
+    border-color: var(--border-active);
+  }
+}
+
+.nav-logo {
+  height: 40px;
+  width: auto;
 }
 
 .nav-title {
   font-size: 20px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--text-dark);
   flex: 1;
   text-align: center;
   min-width: 0;
@@ -265,13 +289,11 @@ html, body {
 
 /* Spacers to balance headers and keep titles centered */
 .nav-spacer {
-  /* Matches Back button width */
   width: 110px;
   flex-shrink: 0;
 }
 
 .nav-spacer-home {
-  /* Matches Home button width */
   width: 130px;
   flex-shrink: 0;
 }
@@ -281,6 +303,7 @@ html, body {
   flex: 1;
   width: 100%;
   overflow: hidden;
+  background-color: var(--modz-light-bg);
 }
 
 .swiper {
@@ -292,27 +315,28 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--modz-black);
+  background-color: var(--modz-light-bg);
 }
 
 .swiper-slide img {
   max-width: 100%;
   max-height: 100%;
+  width: auto;
+  height: auto;
   object-fit: contain;
 }
 
 /* Page Indicator */
-.page-indicator {
-  position: absolute;
+.swiper-pagination-fraction {
   bottom: 20px;
+  background: rgba(58, 58, 58, 0.8);
+  color: white;
+  width: auto;
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 8px 20px;
+  padding: 8px 24px;
   border-radius: 20px;
   font-size: 16px;
-  color: var(--text-secondary);
-  z-index: 50;
 }
 
 /* ==================== TOC SCREEN ==================== */
@@ -322,17 +346,18 @@ html, body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: var(--modz-black);
+  background-color: var(--modz-light-bg);
 }
 
 .toc-header {
   display: flex;
   align-items: center;
-  padding: var(--padding-md);
-  background-color: var(--modz-dark-gray);
-  border-bottom: 1px solid #333;
+  justify-content: space-between;
+  padding: var(--padding-sm) var(--padding-md);
+  background-color: #d9d9d9;
+  border-bottom: 1px solid #c5c0ba;
   gap: 12px;
-  min-height: 80px;
+  min-height: 70px;
 }
 
 .toc-header h1 {
@@ -340,7 +365,7 @@ html, body {
   text-align: center;
   font-size: 28px;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--text-dark);
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -357,28 +382,58 @@ html, body {
 
 /* Category Section */
 .toc-category {
-  margin-bottom: var(--padding-md);
+  margin-bottom: 12px;
 }
 
+/* Category Header - Same style as home screen buttons */
 .toc-category-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
-  background-color: var(--modz-red);
-  border-radius: var(--radius-md);
+  padding: 18px 24px;
+  background-color: #d9d9d9;
+  border: 2px solid transparent;
+  border-radius: 18px;
   cursor: pointer;
   margin-bottom: 8px;
+  transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+  position: relative;
+  /* Shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* Inner border for category headers */
+.toc-category-header::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  border: 1px solid #b8b8b8;
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.toc-category-header:active {
+  transform: scale(0.98);
+  background-color: #cfcfcf;
+  border-color: var(--border-active);
 }
 
 .toc-category-header h2 {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--modz-white);
+  font-family: 'Oswald', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: var(--text-dark);
+  text-transform: uppercase;
 }
 
+/* Arrow indicator */
 .toc-category-header .arrow {
-  font-size: 24px;
+  color: var(--modz-red);
+  font-size: 18px;
   transition: transform 0.3s ease;
 }
 
@@ -386,12 +441,22 @@ html, body {
   transform: rotate(180deg);
 }
 
-/* Product Items */
+/* Page number in category header */
+.toc-category-header .page-num {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-light);
+  letter-spacing: 1px;
+}
+
+/* Product Items - Dark sub-buttons (10% narrower) */
 .toc-items {
   display: none;
   flex-direction: column;
-  gap: 4px;
-  padding-left: 16px;
+  gap: 6px;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-top: 4px;
 }
 
 .toc-items.visible {
@@ -403,26 +468,31 @@ html, body {
   justify-content: space-between;
   align-items: center;
   padding: 14px 20px;
-  background-color: var(--modz-gray);
+  background-color: var(--modz-black);
   border-radius: var(--radius-md);
   border-left: 4px solid var(--modz-red);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: transform 0.15s ease, background-color 0.15s ease;
 }
 
 .toc-item:active {
-  background-color: #2a2a2a;
+  transform: scale(0.98);
+  background-color: #4a4a4a;
 }
 
 .toc-item .name {
-  font-size: 18px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
   font-weight: 500;
-  color: var(--text-primary);
+  letter-spacing: 2px;
+  color: var(--modz-white);
+  text-transform: uppercase;
 }
 
 .toc-item .page {
-  font-size: 16px;
-  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* ==================== UTILITIES ==================== */
@@ -444,7 +514,7 @@ html, body {
   content: '';
   width: 48px;
   height: 48px;
-  border: 4px solid var(--modz-gray);
+  border: 4px solid var(--modz-light-gray);
   border-top-color: var(--modz-red);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -454,17 +524,26 @@ html, body {
   to { transform: rotate(360deg); }
 }
 
-/* Smooth scrolling for TOC */
+/* Smooth scrolling for TOC - red scrollbar */
 .toc-content::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 .toc-content::-webkit-scrollbar-track {
-  background: var(--modz-dark-gray);
+  background: transparent;
 }
 
 .toc-content::-webkit-scrollbar-thumb {
   background: var(--modz-red);
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
+/* ==================== BACKGROUND PATTERN ==================== */
+
+/* Topographic pattern overlay - applied via background-image in HTML */
+.bg-pattern {
+  background-image: url('../assets/images/modz_kiosk_background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

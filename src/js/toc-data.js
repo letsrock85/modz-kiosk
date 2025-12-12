@@ -1,13 +1,16 @@
 // MODZ Catalog Table of Contents Data
-// Based on 2026_modz_catalog_sample-2.pdf
+// Based on 2026_modz_catalog.pdf (December 2024 update)
+// Total catalog pages: 73
 
 const MODZ_TOC = {
   name: "MODZ",
+  totalPages: 73,
+  hasDetailedTOC: true,
   categories: [
     {
       name: "MODZ® Batteries",
       page: 1,
-      items: []  // No sub-items, just category
+      items: []
     },
     {
       name: "MODZ® Windshields",
@@ -51,12 +54,12 @@ const MODZ_TOC = {
         { name: "Cruze", page: 29 },
         { name: "Gripz", page: 30 },
         { name: "Guardian", page: 31 },
-        { name: "Rover", page: 32 },
+        { name: "Roverz", page: 32 },
         { name: "Street Fox", page: 33 },
         { name: "Tesseract", page: 34 },
-        { name: "X Armory", page: 35 },
+        { name: "X-Armory", page: 35 },
         { name: "X Comp", page: 36 },
-        { name: "X Trail", page: 37 }
+        { name: "X-Trail", page: 37 }
       ]
     },
     {
@@ -124,19 +127,19 @@ const MODZ_TOC = {
 // Other catalogs - simpler structure (no TOC needed)
 const MODZ_BATTERY_TOC = {
   name: "MODZ Battery",
-  totalPages: 20, // Update with actual page count
+  totalPages: 20,
   hasDetailedTOC: false
 };
 
 const EKT_TOC = {
   name: "EKT",
-  totalPages: 30, // Update with actual page count
+  totalPages: 30,
   hasDetailedTOC: false
 };
 
 const MOTORCODE_TOC = {
   name: "Motorcode",
-  totalPages: 25, // Update with actual page count
+  totalPages: 25,
   hasDetailedTOC: false
 };
 
@@ -147,4 +150,3 @@ const CATALOGS = {
   ekt: EKT_TOC,
   motorcode: MOTORCODE_TOC
 };
-
