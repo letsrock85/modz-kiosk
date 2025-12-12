@@ -376,7 +376,7 @@ html, body {
 .toc-content {
   flex: 1;
   overflow-y: auto;
-  padding: var(--padding-md);
+  padding: 20px 5%;
   -webkit-overflow-scrolling: touch;
 }
 
