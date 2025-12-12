@@ -449,13 +449,13 @@ html, body {
   letter-spacing: 1px;
 }
 
-/* Product Items - Dark sub-buttons (10% narrower) */
+/* Product Items - Dark sub-buttons */
 .toc-items {
   display: none;
   flex-direction: column;
   gap: 6px;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 0;
+  padding-right: 0;
   margin-top: 4px;
 }
 
