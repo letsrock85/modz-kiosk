@@ -42,13 +42,61 @@
   user-select: none;
 }
 
+/* ==================== UNIFIED KIOSK LAYOUT ==================== */
+/* This layout is shared across ALL pages (index.html, viewer.html) */
+/* Target: 1080x1920 portrait, with letterbox on landscape displays */
+
 html, body {
+  margin: 0;
+  padding: 0;
   width: 100%;
   height: 100%;
+  background-color: var(--modz-light-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   font-family: 'Oswald', 'Segoe UI', 'Arial', sans-serif;
-  background-color: var(--modz-light-bg);
   color: var(--text-dark);
+}
+
+.kiosk-frame {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Desktop/landscape: maintain 9:16 aspect ratio with black letterbox */
+@media screen and (min-aspect-ratio: 9/16) {
+  html, body {
+    background-color: #000;
+  }
+  .kiosk-frame {
+    width: calc(100vh * (9 / 16));
+    max-width: calc(100vh * (9 / 16));
+    height: 100%;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Portrait/mobile: fill entire screen */
+@media screen and (max-aspect-ratio: 9/16) {
+  .kiosk-frame {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+  }
+}
+
+/* View container - fills kiosk-frame (used in viewer.html) */
+.view-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ==================== HOME SCREEN ==================== */
@@ -65,7 +113,7 @@ html, body {
   background-position: center;
   background-repeat: no-repeat;
   padding: 0 var(--padding-lg);
-  padding-top: 8%;
+  padding-top: 5%;
   position: relative;
 }
 
@@ -80,9 +128,11 @@ html, body {
   align-items: flex-start;
   flex-shrink: 0;
   padding-left: 5%;
+  margin-top: 3%;
 }
 
 .home-header img {
+  width: 420px;
   max-width: 85%;
   height: auto;
   display: block;
@@ -91,34 +141,54 @@ html, body {
 /* PGA 2026 subtitle */
 .pga-subtitle {
   font-family: 'Oswald', sans-serif;
-  font-size: 28px;
+  font-size: 12px;
   font-weight: 300;
-  letter-spacing: 12px;
+  letter-spacing: 9.8px;
   color: var(--text-red);
   margin-top: 8px;
   text-transform: uppercase;
 }
 
-/* Red decorative line */
-.decorative-line {
+/* Decorative divider: horizontal line with triangle marker */
+.decorative-divider {
+  width: 90%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  height: 45px;
+  flex-shrink: 0;
+}
+
+.decorative-divider .h-line {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #b5b0aa;
+}
+
+.decorative-divider .marker {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 40px;
-  margin-bottom: 30px;
+  position: absolute;
+  right: 15%;
+  top: 0;
 }
 
-.decorative-line .triangle {
+.decorative-divider .triangle {
   width: 0;
   height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 12px solid var(--modz-red);
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 9px solid var(--modz-red);
+  margin-bottom: 4px;
 }
 
-.decorative-line .line {
-  width: 2px;
-  height: 40px;
+.decorative-divider .v-line {
+  width: 1px;
+  height: 28px;
   background-color: var(--modz-red);
 }
 
@@ -126,59 +196,62 @@ html, body {
 .brand-grid {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 30px;
   width: 90%;
-  max-width: 700px;
+  max-width: 800px;
   position: relative;
   z-index: 1;
-  flex-grow: 0;
-  margin-top: auto;
-  margin-bottom: auto;
+  flex-grow: 1;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 5%;
 }
 
 .brand-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 22px 30px;
+  padding: 28px 32px;
   background-color: #d9d9d9;
-  border-radius: 18px;
+  border-radius: 22px;
   border: 2px solid transparent;
   /* Subtle shadow for depth */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-              border-color 0.15s ease, 
+  transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 0.15s ease,
               box-shadow 0.15s ease,
               background-color 0.15s ease;
   text-decoration: none;
   position: relative;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
-  min-height: 70px;
+  min-height: 95px;
 }
 
 /* Inner border using pseudo-element */
 .brand-button::before {
   content: '';
   position: absolute;
-  top: 6px;
-  left: 6px;
-  right: 6px;
-  bottom: 6px;
+  top: 7px;
+  left: 7px;
+  right: 7px;
+  bottom: 7px;
   border: 1px solid #b8b8b8;
-  border-radius: 12px;
+  border-radius: 15px;
   pointer-events: none;
 }
 
 /* Text inside brand buttons */
 .brand-button .brand-text {
   font-family: 'Oswald', sans-serif;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 400;
   letter-spacing: 4px;
   color: var(--text-dark);
   text-transform: uppercase;
+  text-align: center;
+  line-height: 1.3;
 }
 
 .brand-button .brand-text strong {
@@ -205,6 +278,271 @@ html, body {
   }
 }
 
+/* ==================== RESPONSIVE: Small screens ==================== */
+/* For phones and smaller viewports */
+
+/* Very small screens (under 700px height) */
+@media screen and (max-height: 700px) {
+  .home-screen {
+    padding-top: 2%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  .home-header {
+    margin-top: 1%;
+    padding-left: 3%;
+  }
+  
+  .home-header img {
+    width: 200px;
+  }
+  
+  .pga-subtitle {
+    font-size: 8px;
+    letter-spacing: 4px;
+    margin-top: 4px;
+  }
+  
+  .decorative-divider {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    height: 28px;
+  }
+  
+  .decorative-divider .v-line {
+    height: 14px;
+  }
+  
+  .decorative-divider .triangle {
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 6px;
+  }
+  
+  .brand-grid {
+    gap: 10px;
+    margin-top: 5px;
+    margin-bottom: 2%;
+  }
+  
+  .brand-button {
+    padding: 12px 14px;
+    min-height: 44px;
+    border-radius: 12px;
+  }
+  
+  .brand-button::before {
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    border-radius: 9px;
+  }
+  
+  .brand-button .brand-text {
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    line-height: 1.2;
+  }
+}
+
+/* Small screens (700-850px height) - most phones */
+@media screen and (max-height: 850px) and (min-height: 701px) {
+  .home-screen {
+    padding-top: 3%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .home-header {
+    margin-top: 2%;
+  }
+  
+  .home-header img {
+    width: 280px;
+  }
+  
+  .pga-subtitle {
+    font-size: 9px;
+    letter-spacing: 5px;
+  }
+  
+  .decorative-divider {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    height: 35px;
+  }
+  
+  .decorative-divider .v-line {
+    height: 18px;
+  }
+  
+  .brand-grid {
+    gap: 12px;
+    margin-top: 8px;
+    margin-bottom: 3%;
+  }
+  
+  .brand-button {
+    padding: 14px 16px;
+    min-height: 48px;
+    border-radius: 14px;
+  }
+  
+  .brand-button::before {
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border-radius: 10px;
+  }
+  
+  .brand-button .brand-text {
+    font-size: 16px;
+    letter-spacing: 2px;
+    line-height: 1.2;
+  }
+}
+
+/* Medium screens (850-1000px height) */
+@media screen and (max-height: 1000px) and (min-height: 851px) {
+  .home-header img {
+    width: 380px;
+  }
+
+  .pga-subtitle {
+    font-size: 12px;
+    letter-spacing: 8px;
+  }
+
+  .decorative-divider {
+    margin-top: 18px;
+    margin-bottom: 18px;
+    height: 45px;
+  }
+
+  .brand-grid {
+    gap: 25px;
+  }
+
+  .brand-button {
+    padding: 24px 30px;
+    min-height: 85px;
+  }
+
+  .brand-button .brand-text {
+    font-size: 24px;
+    letter-spacing: 3px;
+  }
+}
+
+/* Large screens (1000-1200px height) - landscape kiosk */
+@media screen and (max-height: 1200px) and (min-height: 1001px) {
+  .home-header img {
+    width: 480px;
+  }
+
+  .pga-subtitle {
+    font-size: 14px;
+    letter-spacing: 10px;
+  }
+
+  .decorative-divider {
+    margin-top: 22px;
+    margin-bottom: 22px;
+    height: 55px;
+  }
+
+  .decorative-divider .v-line {
+    height: 35px;
+  }
+
+  .brand-grid {
+    gap: 32px;
+    max-width: 850px;
+  }
+
+  .brand-button {
+    padding: 30px 38px;
+    min-height: 105px;
+    border-radius: 24px;
+  }
+
+  .brand-button::before {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    border-radius: 16px;
+  }
+
+  .brand-button .brand-text {
+    font-size: 30px;
+    letter-spacing: 4px;
+  }
+}
+
+/* Target kiosk resolution: 1080x1920 and larger */
+@media screen and (min-height: 1200px) {
+  .home-screen {
+    padding-top: 3%;
+  }
+  
+  .home-header {
+    margin-top: 2%;
+  }
+  
+  .home-header img {
+    width: 650px;
+  }
+  
+  .pga-subtitle {
+    font-size: 20px;
+    letter-spacing: 16px;
+  }
+  
+  .decorative-divider {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 70px;
+  }
+  
+  .decorative-divider .v-line {
+    height: 45px;
+  }
+  
+  .decorative-divider .triangle {
+    border-left-width: 12px;
+    border-right-width: 12px;
+    border-top-width: 14px;
+  }
+  
+  .brand-grid {
+    gap: 40px;
+    max-width: 900px;
+  }
+  
+  .brand-button {
+    padding: 38px 48px;
+    min-height: 130px;
+    border-radius: 28px;
+  }
+  
+  .brand-button::before {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 18px;
+  }
+  
+  .brand-button .brand-text {
+    font-size: 38px;
+    letter-spacing: 6px;
+  }
+}
+
 /* ==================== VIEWER SCREEN ==================== */
 
 .viewer-screen {
@@ -213,6 +551,9 @@ html, body {
   display: flex;
   flex-direction: column;
   background-color: var(--modz-light-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* Navigation Bar - Light gray style */
@@ -311,6 +652,23 @@ html, body {
   height: 100%;
 }
 
+/* Page Indicator */
+.swiper-pagination-fraction {
+  position: absolute !important;
+  bottom: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
+  background: rgba(58, 58, 58, 0.85);
+  color: white !important;
+  padding: 10px 28px;
+  border-radius: 25px;
+  font-size: 18px;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 2px;
+}
+
+/* Swiper slide styling */
 .swiper-slide {
   display: flex;
   align-items: center;
@@ -326,19 +684,6 @@ html, body {
   object-fit: contain;
 }
 
-/* Page Indicator */
-.swiper-pagination-fraction {
-  bottom: 20px;
-  background: rgba(58, 58, 58, 0.8);
-  color: white;
-  width: auto;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 8px 24px;
-  border-radius: 20px;
-  font-size: 16px;
-}
-
 /* ==================== TOC SCREEN ==================== */
 
 .toc-screen {
@@ -347,6 +692,9 @@ html, body {
   display: flex;
   flex-direction: column;
   background-color: var(--modz-light-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .toc-header {

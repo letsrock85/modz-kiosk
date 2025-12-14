@@ -9,109 +9,17 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <style>
-    /* ==================== UNIFIED KIOSK LAYOUT ==================== */
-    /* This layout is shared across all pages (index.html, viewer.html) */
-    /* Target: 1080x1920 portrait, with letterbox on landscape displays */
-    
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #e8e4df;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    
-    .kiosk-frame {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    
-    /* Desktop/landscape: maintain 9:16 aspect ratio with black letterbox */
-    @media screen and (min-aspect-ratio: 9/16) {
-      html, body {
-        background-color: #000;
-      }
-      .kiosk-frame {
-        width: calc(100vh * (9 / 16));
-        max-width: calc(100vh * (9 / 16));
-        height: 100%;
-        box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
-      }
-    }
-    
-    /* Portrait/mobile: fill entire screen */
-    @media screen and (max-aspect-ratio: 9/16) {
-      .kiosk-frame {
-        width: 100%;
-        height: 100%;
-        max-width: none;
-        max-height: none;
-      }
-    }
-    
-    /* ==================== PAGE-SPECIFIC STYLES ==================== */
-    
-    /* Background pattern for TOC and viewer */
+    /* Page-specific: background image paths */
     .toc-screen,
     .viewer-screen {
       background-image: url('assets/images/modz_kiosk_background.png');
-      background-color: #e8e4df;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
     }
     
-    /* View container - fills kiosk-frame */
-    .view-container {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    /* Page number in TOC header */
-    .page-num {
-      font-size: 14px;
-      color: #888888;
-      font-weight: 400;
-      letter-spacing: 1px;
-    }
-    
-    /* Swiper pagination styling */
-    .swiper-pagination-fraction {
-      bottom: 20px;
-      background: rgba(58, 58, 58, 0.85);
-      color: white;
-      width: auto;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 10px 28px;
-      border-radius: 25px;
-      font-size: 18px;
-      font-family: 'Oswald', sans-serif;
-      letter-spacing: 2px;
-    }
-    
-    /* Fix image scaling for 1080x1920 display */
-    .swiper-slide {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #e8e4df;
-    }
-    
+    /* Swiper slide images - crisp rendering */
     .swiper-slide img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      /* Ensure sharp rendering */
       image-rendering: -webkit-optimize-contrast;
       image-rendering: crisp-edges;
     }
