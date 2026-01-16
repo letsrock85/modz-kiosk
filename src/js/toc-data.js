@@ -139,7 +139,7 @@ const EKT_TOC = {
 
 const MOTORCODE_TOC = {
   name: "Motorcode",
-  totalPages: 25,
+  totalPages: 7,
   hasDetailedTOC: false
 };
 
