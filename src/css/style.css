@@ -113,84 +113,16 @@ html, body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 0 var(--padding-lg);
-  padding-top: 5%;
+  padding: 0;
   position: relative;
 }
 
-/* Header section with logo */
-.home-header {
-  text-align: left;
-  position: relative;
-  z-index: 1;
+/* Full header image (logo + PGA 2026 + decorative line) */
+.home-header-image {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex-shrink: 0;
-  padding-left: 5%;
-  margin-top: 3%;
-}
-
-.home-header img {
-  width: 420px;
-  max-width: 85%;
   height: auto;
   display: block;
-}
-
-/* PGA 2026 subtitle */
-.pga-subtitle {
-  font-family: 'Oswald', sans-serif;
-  font-size: 12px;
-  font-weight: 300;
-  letter-spacing: 9.8px;
-  color: var(--text-red);
-  margin-top: 8px;
-  text-transform: uppercase;
-}
-
-/* Decorative divider: horizontal line with triangle marker */
-.decorative-divider {
-  width: 90%;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  position: relative;
-  height: 45px;
   flex-shrink: 0;
-}
-
-.decorative-divider .h-line {
-  position: absolute;
-  bottom: 8px;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background-color: #b5b0aa;
-}
-
-.decorative-divider .marker {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  right: 15%;
-  top: 0;
-}
-
-.decorative-divider .triangle {
-  width: 0;
-  height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 9px solid var(--modz-red);
-  margin-bottom: 4px;
-}
-
-.decorative-divider .v-line {
-  width: 1px;
-  height: 28px;
-  background-color: var(--modz-red);
 }
 
 /* Brand Buttons - Vertical list */
@@ -204,8 +136,9 @@ html, body {
   z-index: 1;
   flex-grow: 1;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 30px;
   margin-bottom: 5%;
+  padding: 0 var(--padding-lg);
 }
 
 .brand-button {
@@ -284,47 +217,11 @@ html, body {
 
 /* Very small screens (under 700px height) */
 @media screen and (max-height: 700px) {
-  .home-screen {
-    padding-top: 2%;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-  
-  .home-header {
-    margin-top: 1%;
-    padding-left: 3%;
-  }
-  
-  .home-header img {
-    width: 200px;
-  }
-  
-  .pga-subtitle {
-    font-size: 8px;
-    letter-spacing: 4px;
-    margin-top: 4px;
-  }
-  
-  .decorative-divider {
-    margin-top: 8px;
-    margin-bottom: 8px;
-    height: 28px;
-  }
-  
-  .decorative-divider .v-line {
-    height: 14px;
-  }
-  
-  .decorative-divider .triangle {
-    border-left-width: 5px;
-    border-right-width: 5px;
-    border-top-width: 6px;
-  }
-  
   .brand-grid {
     gap: 10px;
-    margin-top: 5px;
+    margin-top: 15px;
     margin-bottom: 2%;
+    padding: 0 16px;
   }
   
   .brand-button {
@@ -350,39 +247,11 @@ html, body {
 
 /* Small screens (700-850px height) - most phones */
 @media screen and (max-height: 850px) and (min-height: 701px) {
-  .home-screen {
-    padding-top: 3%;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  
-  .home-header {
-    margin-top: 2%;
-  }
-  
-  .home-header img {
-    width: 280px;
-  }
-  
-  .pga-subtitle {
-    font-size: 9px;
-    letter-spacing: 5px;
-  }
-  
-  .decorative-divider {
-    margin-top: 12px;
-    margin-bottom: 12px;
-    height: 35px;
-  }
-  
-  .decorative-divider .v-line {
-    height: 18px;
-  }
-  
   .brand-grid {
     gap: 12px;
-    margin-top: 8px;
+    margin-top: 20px;
     margin-bottom: 3%;
+    padding: 0 20px;
   }
   
   .brand-button {
@@ -408,23 +277,9 @@ html, body {
 
 /* Medium screens (850-1000px height) */
 @media screen and (max-height: 1000px) and (min-height: 851px) {
-  .home-header img {
-    width: 380px;
-  }
-
-  .pga-subtitle {
-    font-size: 12px;
-    letter-spacing: 8px;
-  }
-
-  .decorative-divider {
-    margin-top: 18px;
-    margin-bottom: 18px;
-    height: 45px;
-  }
-
   .brand-grid {
     gap: 25px;
+    margin-top: 25px;
   }
 
   .brand-button {
@@ -440,27 +295,9 @@ html, body {
 
 /* Large screens (1000-1200px height) - landscape kiosk */
 @media screen and (max-height: 1200px) and (min-height: 1001px) {
-  .home-header img {
-    width: 480px;
-  }
-
-  .pga-subtitle {
-    font-size: 14px;
-    letter-spacing: 10px;
-  }
-
-  .decorative-divider {
-    margin-top: 22px;
-    margin-bottom: 22px;
-    height: 55px;
-  }
-
-  .decorative-divider .v-line {
-    height: 35px;
-  }
-
   .brand-grid {
     gap: 32px;
+    margin-top: 30px;
     max-width: 850px;
   }
 
@@ -486,41 +323,9 @@ html, body {
 
 /* Target kiosk resolution: 1080x1920 and larger */
 @media screen and (min-height: 1200px) {
-  .home-screen {
-    padding-top: 3%;
-  }
-  
-  .home-header {
-    margin-top: 2%;
-  }
-  
-  .home-header img {
-    width: 650px;
-  }
-  
-  .pga-subtitle {
-    font-size: 20px;
-    letter-spacing: 16px;
-  }
-  
-  .decorative-divider {
-    margin-top: 30px;
-    margin-bottom: 30px;
-    height: 70px;
-  }
-  
-  .decorative-divider .v-line {
-    height: 45px;
-  }
-  
-  .decorative-divider .triangle {
-    border-left-width: 12px;
-    border-right-width: 12px;
-    border-top-width: 14px;
-  }
-  
   .brand-grid {
     gap: 40px;
+    margin-top: 40px;
     max-width: 900px;
   }
   

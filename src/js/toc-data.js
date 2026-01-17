@@ -127,13 +127,13 @@ const MODZ_TOC = {
 // Other catalogs - simpler structure (no TOC needed)
 const MODZ_BATTERY_TOC = {
   name: "MODZ Battery",
-  totalPages: 20,
+  totalPages: 5,
   hasDetailedTOC: false
 };
 
 const EKT_TOC = {
   name: "EKT",
-  totalPages: 30,
+  totalPages: 3,
   hasDetailedTOC: false
 };
 

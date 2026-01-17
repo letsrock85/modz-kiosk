@@ -40,10 +40,8 @@
           Home
         </button>
         <img src="assets/images/modz_kiosk_modz_logo.png" alt="MODZ" class="nav-logo">
-        <button class="nav-button" id="tocBackButton" onclick="goHome()">
-          <span class="arrow-icon">◀</span>
-          Back
-        </button>
+        <!-- Spacer to keep logo centered -->
+        <div class="nav-spacer"></div>
       </header>
       
       <div class="toc-content" id="tocContent">
@@ -54,17 +52,23 @@
     <!-- VIEWER SCREEN (swipe through pages) -->
     <div class="viewer-screen hidden" id="viewerScreen">
       <nav class="nav-bar">
-        <button class="nav-button" onclick="goHome()">
-          <span class="arrow-icon">▲</span>
-          Home
-        </button>
-        <img src="assets/images/modz_kiosk_modz_logo.png" alt="MODZ" class="nav-logo" id="viewerLogo">
+        <!-- For catalogs with TOC: Back (left) + Home (right) -->
+        <!-- For catalogs without TOC: Home only (left) -->
         <button class="nav-button" id="backButton" onclick="goToTOC()">
           <span class="arrow-icon">◀</span>
           Back
         </button>
-        <!-- Spacer to keep logo centered when Back is hidden -->
-        <div id="backSpacer" class="nav-spacer" style="display: none;"></div>
+        <button class="nav-button" id="homeButtonLeft" onclick="goHome()" style="display: none;">
+          <span class="arrow-icon">▲</span>
+          Home
+        </button>
+        <img src="assets/images/modz_kiosk_modz_logo.png" alt="MODZ" class="nav-logo" id="viewerLogo">
+        <button class="nav-button" id="homeButtonRight" onclick="goHome()">
+          <span class="arrow-icon">▲</span>
+          Home
+        </button>
+        <!-- Spacer to keep logo centered when Home right is hidden -->
+        <div id="homeSpacer" class="nav-spacer" style="display: none;"></div>
       </nav>
       
       <div class="swiper-container">
@@ -194,16 +198,24 @@
       document.getElementById('tocScreen').classList.add('hidden');
       document.getElementById('viewerScreen').classList.remove('hidden');
       
-      // Show/hide Back button based on catalog type
+      // Show/hide buttons based on catalog type
       const backButton = document.getElementById('backButton');
-      const backSpacer = document.getElementById('backSpacer');
+      const homeButtonLeft = document.getElementById('homeButtonLeft');
+      const homeButtonRight = document.getElementById('homeButtonRight');
+      const homeSpacer = document.getElementById('homeSpacer');
+      
       if (currentCatalogData.hasDetailedTOC === false) {
-        // No TOC - hide Back button, show spacer to keep logo centered
+        // No TOC - show Home on left only
         backButton.style.display = 'none';
-        backSpacer.style.display = 'block';
+        homeButtonLeft.style.display = 'flex';
+        homeButtonRight.style.display = 'none';
+        homeSpacer.style.display = 'block';
       } else {
+        // Has TOC - show Back on left, Home on right
         backButton.style.display = 'flex';
-        backSpacer.style.display = 'none';
+        homeButtonLeft.style.display = 'none';
+        homeButtonRight.style.display = 'flex';
+        homeSpacer.style.display = 'none';
       }
       
       // Initialize or update swiper
