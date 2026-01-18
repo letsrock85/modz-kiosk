@@ -84,7 +84,9 @@
         <!-- Swipe hint - shows on first load, hides on touch, reappears after 60s inactivity -->
         <div class="swipe-hint" id="swipeHint">
           <span class="swipe-hint-arrow swipe-hint-arrow-left">◀</span>
-          <span class="swipe-hint-hand">👆</span>
+          <span class="swipe-hint-hand">
+            <img src="assets/images/pointer.png" alt="swipe" width="32" height="32">
+          </span>
           <span class="swipe-hint-arrow swipe-hint-arrow-right">▶</span>
         </div>
       </div>
@@ -323,9 +325,15 @@
         threshold: 10,
       });
       
-      // Reset inactivity timer on swipe
-      swiper.on('touchStart', resetInactivityTimer);
-      swiper.on('slideChange', resetInactivityTimer);
+      // Reset inactivity timer and hide swipe hint on swipe
+      swiper.on('touchStart', () => {
+        resetInactivityTimer();
+        hideSwipeHint();
+      });
+      swiper.on('slideChange', () => {
+        resetInactivityTimer();
+        hideSwipeHint();
+      });
     }
     
     // Go to TOC (back button functionality)

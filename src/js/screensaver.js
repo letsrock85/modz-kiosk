@@ -6,7 +6,8 @@
 const ScreenSaver = (function() {
   // Configuration
   const CONFIG = {
-    autoplayDelay: 8000,      // 8 seconds between slides (comfortable viewing)
+    autoplayDelay: 8000,        // 8 seconds between slides (comfortable viewing)
+    autoplayResumeDelay: 30000, // 30 seconds to resume autoplay after user stops interacting
     slides: [
       { id: 'modz', image: 'assets/screensaver/screensaver_slide_1.jpg', catalog: 'modz' },
       { id: 'battery', image: 'assets/screensaver/screensaver_slide_2.jpg', catalog: 'modz-battery' },
@@ -94,13 +95,9 @@ const ScreenSaver = (function() {
     swiper.on('slideChange', updatePagination);
     swiper.on('slideChangeTransitionEnd', updatePagination);
     
-    // Stop autoplay on user touch
+    // Stop autoplay on user touch, start resume timer
     swiper.on('touchStart', () => {
-      if (!autoplayStopped) {
-        stopAutoplayTimer();
-        autoplayStopped = true;
-        console.log('[ScreenSaver] Autoplay stopped (user interaction)');
-      }
+      stopAutoplay();
     });
     
     // Start custom autoplay
@@ -109,6 +106,7 @@ const ScreenSaver = (function() {
   
   // Custom autoplay timer (loops from last to first)
   let autoplayTimer = null;
+  let autoplayResumeTimer = null;
   
   function startAutoplayTimer() {
     stopAutoplayTimer();
@@ -128,6 +126,25 @@ const ScreenSaver = (function() {
     if (autoplayTimer) {
       clearInterval(autoplayTimer);
       autoplayTimer = null;
+    }
+  }
+  
+  // Start timer to resume autoplay after inactivity
+  function startAutoplayResumeTimer() {
+    stopAutoplayResumeTimer();
+    autoplayResumeTimer = setTimeout(() => {
+      if (isActive && autoplayStopped) {
+        autoplayStopped = false;
+        startAutoplayTimer();
+        console.log('[ScreenSaver] Autoplay resumed after 30s inactivity');
+      }
+    }, CONFIG.autoplayResumeDelay);
+  }
+  
+  function stopAutoplayResumeTimer() {
+    if (autoplayResumeTimer) {
+      clearTimeout(autoplayResumeTimer);
+      autoplayResumeTimer = null;
     }
   }
 
@@ -198,13 +215,14 @@ const ScreenSaver = (function() {
     });
   }
 
-  // Stop autoplay helper
+  // Stop autoplay and start resume timer
   function stopAutoplay() {
-    if (!autoplayStopped && swiper) {
-      swiper.autoplay.stop();
+    if (!autoplayStopped) {
       autoplayStopped = true;
-      console.log('[ScreenSaver] Autoplay stopped');
+      console.log('[ScreenSaver] Autoplay stopped (user interaction)');
     }
+    // Always restart the resume timer on interaction
+    startAutoplayResumeTimer();
   }
 
   // Navigate to catalog with fade-out animation
@@ -229,6 +247,7 @@ const ScreenSaver = (function() {
     
     isActive = false;
     stopAutoplayTimer();
+    stopAutoplayResumeTimer();
     
     // Navigate immediately - new page will load while fade plays
     window.location.href = url;
@@ -269,6 +288,7 @@ const ScreenSaver = (function() {
     isActive = false;
     
     stopAutoplayTimer();
+    stopAutoplayResumeTimer();
     
     console.log('[ScreenSaver] Hidden');
   }

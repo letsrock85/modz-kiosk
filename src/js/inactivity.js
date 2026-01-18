@@ -3,7 +3,7 @@
 // Hides Screen Saver on any touch/interaction
 
 // Time in milliseconds (3 minutes = 180000ms)
-const INACTIVITY_TIMEOUT = 5000;//= 3 * 60 * 1000;
+const INACTIVITY_TIMEOUT = 3 * 60 * 1000;
 
 let inactivityTimer = null;
 

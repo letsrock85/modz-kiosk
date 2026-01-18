@@ -33,8 +33,15 @@
 }
 
 .swipe-hint-hand {
-  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   animation: swipeAnimation 2s ease-in-out infinite;
+}
+
+.swipe-hint-hand svg {
+  width: 32px;
+  height: 32px;
 }
 
 /* Анимация руки влево-вправо */
