@@ -1,0 +1,54 @@
+/* Oswald - Light (300) */
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('Oswald-Light.woff2') format('woff2');
+}
+
+/* Oswald - Regular (400) */
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('Oswald-Regular.woff2') format('woff2');
+}
+
+/* Oswald - Medium (500) */
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('Oswald-Medium.woff2') format('woff2');
+}
+
+/* Oswald - SemiBold (600) */
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('Oswald-SemiBold.woff2') format('woff2');
+}
+
+/* Oswald - Bold (700) */
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('Oswald-Bold.woff2') format('woff2');
+}
+
+/* Bebas Neue - Regular */
+@font-face {
+  font-family: 'Bebas Neue';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('BebasNeue-Regular.woff2') format('woff2');
+}
+

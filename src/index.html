@@ -10,6 +10,8 @@
   <meta name="mobile-web-app-capable" content="yes">
   <title>MODZ Kiosk</title>
   <link rel="stylesheet" href="css/style.css?v=20241214">
+  <link rel="stylesheet" href="css/vendor/swiper-bundle.min.css">
+  <link rel="stylesheet" href="css/screensaver.css?v=20250117">
   <style>
     /* Page-specific: background image path */
     .home-screen {
@@ -49,12 +51,9 @@
     </div>
   </div> <!-- /kiosk-frame -->
 
+  <!-- Scripts -->
+  <script src="js/vendor/swiper-bundle.min.js"></script>
+  <script src="js/screensaver.js"></script>
   <script src="js/inactivity.js"></script>
-  <script>
-    // Initialize inactivity timer on home screen
-    // Reset timer on any touch/click
-    document.addEventListener('touchstart', resetInactivityTimer);
-    document.addEventListener('click', resetInactivityTimer);
-  </script>
 </body>
 </html>

@@ -10,7 +10,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <title>MODZ Catalog Viewer</title>
   <link rel="stylesheet" href="css/style.css?v=20241214">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="css/swipe-hint.css?v=20241214">
+  <link rel="stylesheet" href="css/vendor/swiper-bundle.min.css">
+  <link rel="stylesheet" href="css/screensaver.css?v=20250117">
   <style>
     /* Page-specific: background image paths */
     .toc-screen {
@@ -78,6 +80,13 @@
           </div>
           <div class="swiper-pagination"></div>
         </div>
+        
+        <!-- Swipe hint - shows on first load, hides on touch, reappears after 60s inactivity -->
+        <div class="swipe-hint" id="swipeHint">
+          <span class="swipe-hint-arrow swipe-hint-arrow-left">◀</span>
+          <span class="swipe-hint-hand">👆</span>
+          <span class="swipe-hint-arrow swipe-hint-arrow-right">▶</span>
+        </div>
       </div>
     </div>
     
@@ -85,8 +94,9 @@
   </div> <!-- /kiosk-frame -->
 
   <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="js/vendor/swiper-bundle.min.js"></script>
   <script src="js/toc-data.js"></script>
+  <script src="js/screensaver.js"></script>
   <script src="js/inactivity.js"></script>
   <script>
     // Current state
@@ -94,6 +104,47 @@
     let currentCatalogData = null;
     let swiper = null;
     let totalPages = 73; // Will be updated from catalog data
+    
+    // Swipe hint state
+    let swipeHintTimer = null;
+    const SWIPE_HINT_DELAY = 60000; // 60 seconds
+    
+    // Show swipe hint
+    function showSwipeHint() {
+      const hint = document.getElementById('swipeHint');
+      if (hint) {
+        hint.classList.add('visible');
+        hint.classList.remove('hidden');
+      }
+    }
+    
+    // Hide swipe hint
+    function hideSwipeHint() {
+      const hint = document.getElementById('swipeHint');
+      if (hint) {
+        hint.classList.remove('visible');
+        hint.classList.add('hidden');
+      }
+      // Reset timer to show again after inactivity
+      resetSwipeHintTimer();
+    }
+    
+    // Reset swipe hint timer
+    function resetSwipeHintTimer() {
+      if (swipeHintTimer) {
+        clearTimeout(swipeHintTimer);
+      }
+      swipeHintTimer = setTimeout(showSwipeHint, SWIPE_HINT_DELAY);
+    }
+    
+    // Setup swipe hint listeners on viewer
+    function setupSwipeHintListeners() {
+      const viewerScreen = document.getElementById('viewerScreen');
+      if (viewerScreen) {
+        viewerScreen.addEventListener('touchstart', hideSwipeHint, { passive: true });
+        viewerScreen.addEventListener('click', hideSwipeHint);
+      }
+    }
     
     // Get catalog from URL parameter
     function getCatalogFromURL() {
@@ -220,6 +271,9 @@
       
       // Initialize or update swiper
       initSwiper(startPage);
+      
+      // Show swipe hint after short delay
+      setTimeout(showSwipeHint, 500);
     }
     
     // Initialize Swiper
@@ -293,7 +347,10 @@
     }
     
     // Initialize on DOM ready
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', () => {
+      init();
+      setupSwipeHintListeners();
+    });
   </script>
 </body>
 </html>

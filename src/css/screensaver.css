@@ -1,0 +1,303 @@
+/* ==================== SCREEN SAVER OVERLAY ==================== */
+/* Appears after 3 minutes of inactivity */
+/* Uses same background as home screen */
+
+.screensaver-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: none; /* Controlled by JS */
+  align-items: center;
+  justify-content: center;
+  background-color: #e8e4df;
+  background-image: url('../assets/images/modz_kiosk_background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Fade animation */
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.screensaver-overlay.active {
+  opacity: 1;
+}
+
+/* Fade-out animation when navigating away */
+.screensaver-overlay.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+/* Container for screensaver content - maintains kiosk aspect ratio */
+.screensaver-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Desktop/landscape: maintain 9:16 aspect ratio */
+@media screen and (min-aspect-ratio: 9/16) {
+  .screensaver-container {
+    width: calc(100vh * (9 / 16));
+    max-width: calc(100vh * (9 / 16));
+    height: 100%;
+  }
+}
+
+/* "Tap to view more" text */
+.screensaver-title {
+  position: absolute;
+  top: 5%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Oswald', sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 8px;
+  color: #3a3a3a;
+  text-transform: capitalize;
+  z-index: 10;
+}
+
+/* Swiper container for slides */
+.screensaver-swiper {
+  width: 100%;
+  height: 80%;
+  max-height: 82vh;
+  position: relative;
+  z-index: 25;
+}
+
+.screensaver-swiper .swiper {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.screensaver-swiper .swiper-wrapper {
+  background: transparent;
+}
+
+.screensaver-swiper .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+}
+
+/* Slide card/panel - strong rounded corners */
+/* Exact slide dimensions: 864x1451px (aspect ratio 864:1451) */
+.screensaver-slide-card {
+  /* Height-based sizing with fixed aspect ratio */
+  height: 75vh;
+  width: auto;
+  aspect-ratio: 864 / 1451;
+  /* Cap at original image size */
+  max-width: 864px;
+  max-height: 1451px;
+  /* Strong rounded corners - 48px for prominent rounding */
+  clip-path: inset(0 round 48px);
+  -webkit-clip-path: inset(0 round 48px);
+  border-radius: 48px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  contain: paint;
+}
+
+.screensaver-slide-card:active {
+  transform: scale(0.97);
+}
+
+.screensaver-slide-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+  border-radius: 48px;
+}
+
+/* Navigation arrows - 50% bigger, clickable above swiper */
+.screensaver-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a11114;
+  font-size: 36px;
+  cursor: pointer;
+  z-index: 30; /* Above swiper (z-index: 25) so arrows are clickable */
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.2s ease;
+}
+
+.screensaver-nav-arrow:active {
+  opacity: 0.7;
+}
+
+.screensaver-nav-arrow.prev {
+  left: 16px;
+}
+
+.screensaver-nav-arrow.next {
+  right: 16px;
+}
+
+/* Pagination dots - 2x bigger */
+.screensaver-pagination {
+  position: absolute;
+  bottom: 4%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  z-index: 10;
+}
+
+.screensaver-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #888888;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.screensaver-dot.active {
+  background-color: #a11114;
+}
+
+.screensaver-dot:active {
+  transform: scale(0.9);
+}
+
+/* Background click area (for returning to home) */
+.screensaver-bg-click {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+/* Small screens */
+@media screen and (max-height: 700px) {
+  .screensaver-title {
+    font-size: 18px;
+    letter-spacing: 5px;
+    top: 2%;
+  }
+  
+  .screensaver-slide-card {
+    max-width: 75%;
+    max-height: 70vh;
+    clip-path: inset(0 round 28px);
+    -webkit-clip-path: inset(0 round 28px);
+    border-radius: 28px;
+  }
+  
+  .screensaver-slide-card img {
+    border-radius: 28px;
+  }
+  
+  .screensaver-nav-arrow {
+    font-size: 27px;
+    width: 45px;
+    height: 45px;
+  }
+  
+  .screensaver-dot {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .screensaver-pagination {
+    gap: 12px;
+    bottom: 2%;
+  }
+}
+
+/* Medium screens */
+@media screen and (max-height: 1000px) and (min-height: 701px) {
+  .screensaver-title {
+    font-size: 24px;
+    letter-spacing: 6px;
+  }
+  
+  .screensaver-slide-card {
+    max-width: 78%;
+    max-height: 72vh;
+    clip-path: inset(0 round 36px);
+    -webkit-clip-path: inset(0 round 36px);
+    border-radius: 36px;
+  }
+  
+  .screensaver-slide-card img {
+    border-radius: 36px;
+  }
+  
+  .screensaver-dot {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .screensaver-pagination {
+    gap: 16px;
+  }
+}
+
+/* Large kiosk screens (1080x1920) */
+@media screen and (min-height: 1200px) {
+  .screensaver-title {
+    font-size: 36px;
+    letter-spacing: 10px;
+  }
+  
+  .screensaver-slide-card {
+    max-width: 864px;
+    max-height: 1451px;
+    clip-path: inset(0 round 56px);
+    -webkit-clip-path: inset(0 round 56px);
+    border-radius: 56px;
+  }
+  
+  .screensaver-slide-card img {
+    border-radius: 56px;
+  }
+  
+  .screensaver-nav-arrow {
+    font-size: 48px;
+    width: 75px;
+    height: 75px;
+  }
+  
+  .screensaver-dot {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .screensaver-pagination {
+    gap: 24px;
+    bottom: 4%;
+  }
+}
+

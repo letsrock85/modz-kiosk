@@ -1,0 +1,80 @@
+/* Swipe Hint - показывает подсказку для листания страниц */
+
+.swipe-hint {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  background: rgba(58, 58, 58, 0.9);
+  border-radius: 30px;
+  z-index: 500;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.swipe-hint.visible {
+  opacity: 1;
+}
+
+.swipe-hint.hidden {
+  opacity: 0;
+}
+
+/* Иконки стрелок и руки */
+.swipe-hint-arrow {
+  font-size: 24px;
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+.swipe-hint-hand {
+  font-size: 32px;
+  animation: swipeAnimation 2s ease-in-out infinite;
+}
+
+/* Анимация руки влево-вправо */
+@keyframes swipeAnimation {
+  0%, 100% {
+    transform: translateX(-15px);
+  }
+  50% {
+    transform: translateX(15px);
+  }
+}
+
+/* Пульсация для привлечения внимания */
+.swipe-hint-arrow-left {
+  animation: pulseLeft 2s ease-in-out infinite;
+}
+
+.swipe-hint-arrow-right {
+  animation: pulseRight 2s ease-in-out infinite;
+}
+
+@keyframes pulseLeft {
+  0%, 100% {
+    opacity: 0.4;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-5px);
+  }
+}
+
+@keyframes pulseRight {
+  0%, 100% {
+    opacity: 0.4;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(5px);
+  }
+}
+

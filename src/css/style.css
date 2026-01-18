@@ -2,7 +2,8 @@
 /* Target: 1080x1920 (portrait) */
 /* Updated: December 2024 - Light theme redesign */
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Bebas+Neue&display=swap');
+/* Local fonts - no CDN dependency */
+@import url('fonts/fonts.css');
 
 :root {
   /* Brand Colors - Updated for light theme */
